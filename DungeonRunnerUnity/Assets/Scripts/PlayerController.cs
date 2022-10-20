@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     float m_verticalMovement;
     // Speed variable to adjust how fast the player moves on screen
     public float m_moveSpeed = 5.0f;
+    public float m_scrollSpeed = 5.0f;
+
+    public GameObject m_SpikeTrapPrefab;
 
     void Start()
     {
@@ -40,11 +43,22 @@ public class PlayerController : MonoBehaviour
                 m_gameManager.UnpauseGame();
             }
         }
+
+        if (transform.position.x < -15){
+            Destroy(gameObject);
+        }
     }
     void FixedUpdate() {
         // Every frame, check for input from the "Horizontal" and "Vertical" inputs and assign them to the values accordingly
         m_verticalMovement = Input.GetAxisRaw("Vertical");
         // Add velocity to the Rigidbody component using the input values, adding the relative move speed we've assigned earlier
-        m_rigidbody.velocity = new Vector2(0.0f, m_verticalMovement * m_moveSpeed);
+       m_rigidbody.velocity = new Vector2(0.0f, m_verticalMovement * m_moveSpeed);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "Trap"){
+           m_animator.SetBool("Dead", true);
+           m_rigidbody.velocity = new Vector2(5.0f, m_verticalMovement * m_moveSpeed);
+        }
     }
 }

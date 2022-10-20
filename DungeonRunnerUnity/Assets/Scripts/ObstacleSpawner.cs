@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
 
-    public GameObject m_gravePrefab;
+    public GameObject m_ObstaclePrefab;
 
     private float m_startTime;
     private float m_timertime;
@@ -14,14 +14,14 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         m_startTime = Time.time;
-        m_timertime = Random.Range(1.0f, 3.0f);
+        m_timertime = Random.Range(0.5f, 2.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Time.time - m_startTime > m_timertime){
-            Instantiate(m_gravePrefab, transform.position, Quaternion.identity);
+            Instantiate(m_ObstaclePrefab, new Vector3(Random.Range( -5f , 8f ),Random.Range(3.5f,-5f), -1f), Quaternion.identity);
 
             m_startTime = Time.time;
 
