@@ -14,7 +14,7 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         m_startTime = Time.time;
-        m_timertime = Random.Range(0.0f, 2.0f);
+        m_timertime = Random.Range(1.0f, 3.0f);
     }
 
     // Update is called once per frame
