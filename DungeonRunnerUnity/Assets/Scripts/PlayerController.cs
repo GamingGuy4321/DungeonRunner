@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager m_gameManager;
 
     Rigidbody2D m_rigidbody;
     // Get access to the Animator on this object
@@ -28,7 +29,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            
+         if (!m_gameManager.m_isPaused) {
+            // Look for the Esc keypress and pause the game if Esc is pressed.
+            if(Input.GetKeyDown(KeyCode.Escape)) {
+                m_gameManager.PauseGame();
+            }
+         }else {
+            // If the game is paused and the Esc key is pressed, unpause the game.
+            if(Input.GetKeyDown(KeyCode.Escape)) {
+                m_gameManager.UnpauseGame();
+            }
+        }
     }
     void FixedUpdate() {
         // Every frame, check for input from the "Horizontal" and "Vertical" inputs and assign them to the values accordingly
