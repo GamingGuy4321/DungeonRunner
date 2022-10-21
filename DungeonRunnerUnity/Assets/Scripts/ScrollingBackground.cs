@@ -17,8 +17,8 @@ public class ScrollingBackground : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beginTarget = 19.99f;
-        endTarget = -19.99f;
+        beginTarget = 17.829f;
+        endTarget = -17.829f;
     }
 
     // Update is called once per frame

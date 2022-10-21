@@ -44,9 +44,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (transform.position.x < -15){
+        if (transform.position.x < -12){
             Destroy(gameObject);
         }
+
     }
     void FixedUpdate() {
         // Every frame, check for input from the "Horizontal" and "Vertical" inputs and assign them to the values accordingly
@@ -58,8 +59,12 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Trap"){
            m_animator.SetBool("Dead", true);
-           m_rigidbody.velocity = new Vector2(5.0f, m_verticalMovement * m_moveSpeed);
-           m_gameManager.LoseGame();
+           m_gameManager.Invoke("LoseGame",2.0f);
         }
+    }
+
+    void OnDestroy() {
+        m_animator.SetBool("Dead", true);
+           m_gameManager.LoseGame();
     }
 }

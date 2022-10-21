@@ -21,7 +21,7 @@ public class ObstacleSpawner : MonoBehaviour
     void Update()
     {
         if(Time.time - m_startTime > m_timertime){
-            Instantiate(m_ObstaclePrefab, new Vector3(Random.Range( 0f , 10f ),Random.Range(3.5f,-5f), -1f), Quaternion.identity);
+            Instantiate(m_ObstaclePrefab, new Vector3(Random.Range( 8f , 18f ),Random.Range(3.5f,-5f), -1f), Quaternion.identity);
 
             m_startTime = Time.time;
 

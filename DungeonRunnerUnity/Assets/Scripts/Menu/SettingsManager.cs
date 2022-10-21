@@ -6,7 +6,7 @@ using TMPro;                // Needed to access TextMeshPro elements.
 public class SettingsManager : MonoBehaviour
 {
     // public reference to AudioMixer to allow control of volume in the Settings menu
-    public AudioMixer m_audioMixer;
+    // public AudioMixer m_audioMixer;
     // private array of Resolutions to use in the Settings menu.
     private Resolution[] m_resolutions;
     // private array of strings to use in the Settings menu with the Graphics dropdown in the Settings menu.
@@ -22,6 +22,22 @@ public class SettingsManager : MonoBehaviour
         ConfigureResolutions();
         ConfigureQualitySettings();
         SetFullscreen(Screen.fullScreen);
+        if(PlayerPrefs.HasKey("Resolution")){
+            SetResolution(PlayerPrefs.GetInt("Resolution"));
+        }
+        if(PlayerPrefs.HasKey("Graphics")){
+            SetGraphicsQuaulity(PlayerPrefs.GetInt("Graphics"));
+        }
+        if(PlayerPrefs.HasKey("Fullscreem")){
+            if(PlayerPrefs.GetInt("Fullscreem") == 1){
+                SetFullscreen(true);
+            }else {
+                SetFullscreen(false);
+             }
+        }
+        if(PlayerPrefs.HasKey("Volume")){
+            SetVolume(PlayerPrefs.GetFloat("Volume"));
+        }
     }
     // Function to configure the supported resolutions available on the system the program is being run on,
     // then apply those options to the Resolution Dropdown menu.
@@ -108,6 +124,8 @@ public class SettingsManager : MonoBehaviour
         // Using our temporary value, assign the new screen resolution based on the value's width and height values.
         // Pass in the current Screen.fullScreen value as the third required parameter of the SetResolution function.
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        PlayerPrefs.SetInt("Resolution", resolutionIndex);
     }
     // Function to set the Graphics Quality based on the Graphics Quality Dropdown Menu in the Settings menu.
     // The function requires an int parameter we called qualityIndex, which will be the number associated
@@ -119,6 +137,7 @@ public class SettingsManager : MonoBehaviour
         // however if your game is more highly detailed, you may want to consider using false for 
         // this and providing the user and option to restart the game to apply the changes they want to make.
         QualitySettings.SetQualityLevel(qualityIndex, true);
+        PlayerPrefs.SetInt("Graphics", qualityIndex);
     }
     // Function to set Screen.fullscreen based on the FullscreenToggle in the Settings menu.
     // The function requires a bool parameter we called isFullscreen, which will be the status of the
@@ -126,6 +145,12 @@ public class SettingsManager : MonoBehaviour
     public void SetFullscreen(bool isFullscreen){
         // Set the Screen.fullScreen variable to be what the isFullscreen value is when it is passed in.
         Screen.fullScreen = isFullscreen;
+        if(isFullscreen){
+            PlayerPrefs.SetInt("Fullscreen", 1);
+        }else {
+            PlayerPrefs.SetInt("Fullscreen",0);
+        }
+
     }
     // Function to set AudioMixer volume based on the VolumeSlider in the Settings menu.
     // The function requires a float parameter we called volume, which will be the number associated
@@ -134,6 +159,7 @@ public class SettingsManager : MonoBehaviour
         // Using the SetFloat function in the AudioMixer, pass in the name of the variable we exposed
         // from the mixer in Unity, then pass in the new volume based on the value we passed 
         // into the SetVolume funciton.
-        m_audioMixer.SetFloat("MainAudioVolume", volume);
+        AudioListener.volume=volume;
+        PlayerPrefs.SetFloat("Volume", volume);
     }
 }
