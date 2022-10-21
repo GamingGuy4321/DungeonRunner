@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     // public reference of the PauseMenu object to allow access to turn the gameobject on and off when the game is paused
     public GameObject m_pauseMenu;
+
+    public GameObject m_LoseMenu;
+
+    public bool m_isLost;
     // public bool to track if the game is in a paused state or not
     public bool m_isPaused;
     void Awake() {
@@ -52,6 +56,19 @@ public class GameManager : MonoBehaviour
             m_isPaused = false;
             // Turn off the PauseMenu gameobject
             m_pauseMenu.SetActive(false);
+        }
+    }
+
+    // Function to pause the game and activate the PauseMenu object
+    public void LoseGame() {
+        // Check to make sure the bool is false, indicating that the game is NOT paused at the moment...
+        if (!m_isLost) {
+            // Set the timescale of the game to 0. This will disable actions/movements based on Rigidbodies.
+            Time.timeScale = 0;
+            // Set the m_isPaused bool to true, indicating a paused gamestate.
+            m_isLost = true;
+            // Turn on the PauseMenu gameobject
+            m_LoseMenu.SetActive(true);
         }
     }
 }

@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "Trap"){
            m_animator.SetBool("Dead", true);
            m_rigidbody.velocity = new Vector2(5.0f, m_verticalMovement * m_moveSpeed);
+           m_gameManager.LoseGame();
         }
     }
 }
